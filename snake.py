@@ -5,12 +5,12 @@ pygame.init()
 
 
 #建立画布
-W = 800
-H = 600
-blocksize = 30
+blocksize = 20
+W = blocksize*40
+H =  blocksize*30
 
 screen_size = (W,H)
-screen = pygame.display.set_mode(screen_size)
+screen = pygame.display.set_mode(screen_size,)
 #方块坐标
 def point(x,y):
     x=x*blocksize
@@ -53,12 +53,12 @@ def food_get(head,bodys):
 
 
 #生成基本因子
-head = point(random.randint(0,int(W/blocksize)-1),random.randint(0,int(H/blocksize)-1))
-head_color = (0,255,255)
+head = point(random.randint(int(W/blocksize)/2,int(W/blocksize)-1),random.randint(0,int(H/blocksize)-1))
+head_color = (255,255,0)
 snakebody = []
-snakebody_color=(25,200,25)
+snakebody_color=(200,200,200)
 food = food_get(head,snakebody)
-food_color = (10,20,42)
+food_color = (100,200,102)
 #确定初始方向
 direct ='left'
 chargedirect = direct
@@ -83,7 +83,7 @@ while 1:
             elif event.key == pygame.K_DOWN:
                 chargedirect = 'down'
 #确定新方向
-    if chargedirect == 'left' and direct != 'right':
+    if chargedirect == 'left' and direct != 'right' :
         direct = chargedirect
     elif chargedirect == 'right' and direct != 'left':
         direct = chargedirect
@@ -92,6 +92,8 @@ while 1:
     elif chargedirect == 'down' and direct != 'up':
         direct = chargedirect
 #蛇头移动
+    if len(snakebody) == 0:
+        direct = chargedirect
     headcopy = list(head)
 
     if direct == 'left' :
@@ -125,7 +127,7 @@ while 1:
     draw(food,food_color)
     pygame.display.flip()
 
-    clock.tick(8)
+    clock.tick(10)
 
 
 
